@@ -16,10 +16,10 @@ A wrong answer deducts that same amount from their total.
 Their score (cash amount) is updated after every turn.
 At the end of the game a winner will be announced as well as their total cash amount. 
 
-### Phase I
+### Phase I *DONE*
 The basic HTML structure and the basic logic of the game will be created.
 Basic database (JSON file) with questions in 7 categories.
-Questions taken from [here]{https://jeopardyquestions.com/}
+Questions taken from [here](https://jeopardyquestions.com/).
 
 ### Phase II 
 More improvements will be added (3rd player, option for each to answer any question, not just the player who selected the question).
