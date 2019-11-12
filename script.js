@@ -13,6 +13,7 @@ $(function() {
       .text()
       .slice(1, $(".player2-score").text().length)
   );
+
   // basic game mechanics for the turn and the game over states
   let turn = 0;
   let answeredQuestions = 0;
@@ -44,38 +45,39 @@ $(function() {
     // check if the answer is correct
     const answer = isCorrectAnswer();
 
+    // turn helper
+    const turnHelper = function (player, playerScore, isCorrect, thisObject) {
+      if (isCorrect) {
+        playerScore += parseInt(
+        $(thisObject)
+          .text()
+          .slice(1, $(thisObject).text().length)
+        );
+        $(`.${player}-score`).text(`$${playerScore}`);
+      } else {
+        playerScore -= parseInt(
+          $(thisObject)
+            .text()
+            .slice(1, $(thisObject).text().length)
+        );
+        $(`.${player}-score`).text(`$${playerScore}`);
+      }
+
+      return playerScore;
+    }
+
     // updaet the score iff the player got the answer right
     if (answer) {
       if (turn % 2 === 0) {
-        p1Score += parseInt(
-          $(this)
-            .text()
-            .slice(1, $(this).text().length)
-        );
-        $(".player1-score").text(`$${p1Score}`);
+        p1Score = turnHelper("player1", p1Score, true, this);
       } else {
-        p2Score += parseInt(
-          $(this)
-            .text()
-            .slice(1, $(this).text().length)
-        );
-        $(".player2-score").text(`$${p2Score}`);
+        p2Score = turnHelper("player2", p2Score, true, this);
       }
     } else {
       if (turn % 2 === 0) {
-        p1Score -= parseInt(
-          $(this)
-            .text()
-            .slice(1, $(this).text().length)
-        );
-        $(".player1-score").text(`$${p1Score}`);
+        p1Score = turnHelper("player1", p1Score, false, this);
       } else {
-        p2Score -= parseInt(
-          $(this)
-            .text()
-            .slice(1, $(this).text().length)
-        );
-        $(".player2-score").text(`$${p2Score}`);
+        p2Score = turnHelper("player2", p2Score, false, this);
       }
     }
 
