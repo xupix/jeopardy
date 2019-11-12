@@ -40,8 +40,8 @@ $(function() {
       return true;
     }
 
-    return false; 
-  }
+    return false;
+  };
 
   // the handler for the question listener
   const question = function() {
@@ -54,12 +54,12 @@ $(function() {
     const answer = isCorrectAnswer();
 
     // turn helper
-    const turnHelper = function (player, playerScore, isCorrect, thisObject) {
+    const turnHelper = function(player, playerScore, isCorrect, thisObject) {
       if (isCorrect) {
         playerScore += parseInt(
-        $(thisObject)
-          .text()
-          .slice(1, $(thisObject).text().length)
+          $(thisObject)
+            .text()
+            .slice(1, $(thisObject).text().length)
         );
         $(`.${player}-score`).text(`$${playerScore}`);
       } else {
@@ -72,7 +72,7 @@ $(function() {
       }
 
       return playerScore;
-    }
+    };
 
     // updaet the score iff the player got the answer right
     if (answer) {
@@ -93,8 +93,8 @@ $(function() {
       }
     }
 
-      // update the game mechanics: turn and answered questions
-      // to keep the state of the game accurate
+    // update the game mechanics: turn and answered questions
+    // to keep the state of the game accurate
     turn++;
     answeredQuestions++;
   };
@@ -112,7 +112,13 @@ $(function() {
       } else if (p3Score > p1Score && p3Score > p2Score) {
         alert(`${player3} is the winner with $${p3Score}!`);
       } else {
-        alert(`No winners today. Multiple contestants got $${Math.max(p1Score, p2Score, p3Score)}.`);
+        alert(
+          `No winners today. Multiple contestants got $${Math.max(
+            p1Score,
+            p2Score,
+            p3Score
+          )}.`
+        );
       }
     }
   };
