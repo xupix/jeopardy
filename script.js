@@ -126,4 +126,7 @@ $(function() {
   // event listeners
   $(".question").on("click", question);
   $(".question").on("click", isGameOver);
+  $(".modal-button").on("click", function() {
+    $(".modal").toggle();
+  })
 });
