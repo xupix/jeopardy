@@ -1,0 +1,28 @@
+body {
+  background: #001883;
+  font-family: 'Poppins', sans-serif;
+}
+
+h1, h2, .players {
+  color: white;
+}
+
+.category {
+  color: #F3C07A;
+  font-size: 1.6em;
+}
+
+.modal {
+  display: none;
+  position: fixed;
+  overflow: auto;
+  z-index: 1;
+  border-width: 9px; 
+  border-style: solid;
+  border-color: #F3C07A;
+  color: white;
+  
+  background: #0024AA;
+  box-shadow: 0 5px 15px 0 rgba(0, 0, 0, 0.05);
+  padding: 35px;
+}
