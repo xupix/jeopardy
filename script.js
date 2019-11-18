@@ -1,5 +1,8 @@
 $(function() {
   // set up the game mechanics
+  const numPlayers = 3;
+
+  // set up players
   let player1 = $(".player1");
   let player2 = $(".player2");
   let player3 = $(".player3");
@@ -25,12 +28,12 @@ $(function() {
   let answeredQuestions = 0;
 
   // get user input for contestant names and populate those in the DOM
-  player1 = prompt("What's player 1's name?");
-  $(".player1").text(player1);
-  player2 = prompt("What's player 2's name?");
-  $(".player2").text(player2);
-  player3 = prompt("What's player 3's name?");
-  $(".player3").text(player3);
+  // player1 = prompt("What's player 1's name?");
+  // $(".player1").text(player1);
+  // player2 = prompt("What's player 2's name?");
+  // $(".player2").text(player2);
+  // player3 = prompt("What's player 3's name?");
+  // $(".player3").text(player3);
 
   // helper function to decide if an answer is correct
   const isCorrectAnswer = () => {
@@ -47,7 +50,7 @@ $(function() {
   const question = function() {
     // update the question that was picked
     $(this)
-      .attr("disabled", "true")
+      .attr("disabled", "disabled")
       .addClass("answered");
 
     // check if the answer is correct
@@ -61,6 +64,8 @@ $(function() {
             .text()
             .slice(1, $(thisObject).text().length)
         );
+
+        // TODO: fix negative score
         $(`.${player}-score`).text(`$${playerScore}`);
       } else {
         playerScore -= parseInt(
@@ -68,6 +73,8 @@ $(function() {
             .text()
             .slice(1, $(thisObject).text().length)
         );
+
+        // TODO: fix negative score
         $(`.${player}-score`).text(`$${playerScore}`);
       }
 
@@ -123,7 +130,48 @@ $(function() {
     }
   };
 
+  const setNames = function(playerNumber) {
+    console.log(playerNumber);
+    
+    $(".modal").toggle();
+    $(".modal").find("p").text("What's your name?");
+    $(".answer").focus();
+
+    $(".modal").find("h2").text(`Player ${playerNumber}`);
+    $(".modal").find(".answer").attr("placeholder", `Player ${playerNumber}`);
+    
+    const playerClass = `.player${playerNumber}`;
+    $(".modal").find("form").on("submit", function() {
+      if (!$("input").val() === "") {
+        $(playerClass).text($("input").val());
+      }
+      $(".answer").val("");
+      $(".modal").toggle();
+    });
+  }
+
   // event listeners
+  // window.addEventListener("load", function(event) {
+  //   setNames();
+  // });
+
+  $("form").on("submit", function(event) {
+    event.preventDefault();
+    // console.log($("input").val());
+    
+    // $(".player1").text($("input").val());
+    // $("input").val("");
+  })
+
+  $(".players").on("click", ".player", function() {
+    if ($(this).children("div.player1")) {
+      setNames(1);
+    } else if ($(this).children("div.player2")) {      
+      setNames(2);
+    } else if ($(this).children("div.player3")) {
+      setNames(3);
+    }
+  });
   $(".question").on("click", question);
   $(".question").on("click", isGameOver);
   $(".modal-button").on("click", function() {
