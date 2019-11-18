@@ -10,22 +10,23 @@
 </head>
 <body>
   <h1>Welcome to Jeopardy!</h1>
+
+  <h2>Round 1</h2>
+
   <div class="players">
-    <div>
+    <div class="player">
       <div class="player1">Player 1</div>
       <div class="player1-score">$0</div>
     </div>
-    <div>
+    <div class="player">
       <div class="player2">Player 2</div>
       <div class="player2-score">$0</div>
     </div>
-    <div>
+    <div class="player">
       <div class="player3">Player 3</div>
       <div class="player3-score">$0</div>
     </div>
   </div>
-
-  <h2>Round 1</h2>
 
   <table style="width:100%">
     <tr>
@@ -80,15 +81,17 @@
   <div class="modal">
     <div class="modal-content">
       <div class="modal-header">
+        <!-- TODO: fix close location and functionality -->
         <span class="close">&times;</span>
         <h2>insert topic and value</h2>
       </div>
       <div class="modal-body">
         <p>insert question text here</p>
       </div>
-      <div class="modal-footer">
-        <h3>insert player answering</h3>
-      </div>
+      <form class="modal-footer">
+        <input class="answer" type="text" placeholder="">
+        <input type="submit" value="submit">
+      </form>
     </div>
   </div>
   
