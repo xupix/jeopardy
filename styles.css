@@ -1,6 +1,21 @@
+html {
+  font-size: 62.5%;
+}
+
 body {
   background: #001883;
   font-family: 'Poppins', sans-serif;
+  font-size: 1.7rem;
+}
+
+h1 {
+  font-size: 4.5rem;
+}
+
+h2 {
+  font-size: 2.1rem;
+  margin-top: 5%;
+  text-align: center;
 }
 
 h1, h2, .players {
@@ -14,15 +29,85 @@ h1, h2, .players {
 
 .modal {
   display: none;
-  position: fixed;
+  position: absolute;
   overflow: auto;
   z-index: 1;
   border-width: 9px; 
   border-style: solid;
   border-color: #F3C07A;
   color: white;
-  
   background: #0024AA;
   box-shadow: 0 5px 15px 0 rgba(0, 0, 0, 0.05);
   padding: 35px;
+  height: 22%;
+  width: 40%;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.answer {
+  margin-top: 8%;
+}
+
+.modal h2 {
+  color: #F3C07A;
+}
+
+.players {
+  margin-left: 5%;
+}
+
+.player {
+  height: 2%;
+  width: 13%;
+  background: #0024AA;
+  float: left;
+  margin-right: 9%;
+  margin-left: 9%;
+  margin-top: 2.5%;
+  text-align: center;
+  border: solid;
+  border-color: black;
+}
+
+.category {
+  padding-bottom: 2%;
+  font-size: 3rem;
+  overflow-wrap: normal;
+}
+
+.question {
+  height: 50px;
+  width: 150px;
+  background: #0024AA;
+  color: white;
+  align-items: center;
+  margin-top: 2%;
+}
+
+table {
+  margin-top: 14%;
+}
+
+button {
+  border: solid;
+  border-color: black;
+}
+
+button:hover, .player:hover {
+  cursor: pointer;
+  border: solid;
+  border-color: #F3C07A;
+}
+
+button:disabled {
+  color: grey;
+  background-color: #001883;
+}
+
+button:disabled:hover {
+  cursor: default;
+  border: solid;
+  border-color: black;
 }
