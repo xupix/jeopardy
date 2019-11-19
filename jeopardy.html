@@ -5,33 +5,36 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Jeopardy</title>
+  <link href="https://fonts.googleapis.com/css?family=Poppins&display=swap" rel="stylesheet"> 
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
   <h1>Welcome to Jeopardy!</h1>
-  <div class:"players">
-    <div>
+
+  <h2>Round 1</h2>
+
+  <div class="players">
+    <div class="player">
       <div class="player1">Player 1</div>
       <div class="player1-score">$0</div>
     </div>
-    <div>
+    <div class="player">
       <div class="player2">Player 2</div>
       <div class="player2-score">$0</div>
     </div>
-    <div>
+    <div class="player">
       <div class="player3">Player 3</div>
       <div class="player3-score">$0</div>
     </div>
   </div>
 
-  <h2>Round 1</h2>
-
   <table style="width:100%">
     <tr>
-      <th class="topic">topic 1</th>
-      <th class="topic">topic 2</th>
-      <th class="topic">topic 3</th>
-      <th class="topic">topic 4</th>
-      <th class="topic">topic 5</th>
+      <th class="category">category 1</th>
+      <th class="category">category 2</th>
+      <th class="category">category 3</th>
+      <th class="category">category 4</th>
+      <th class="category">category 5</th>
     </tr>
     <tr>
       <th><button class="question">$100</button></th>
@@ -69,6 +72,28 @@
       <th><button class="question">$500</button></th>
     </tr>
   </table>
+
+
+  <!-- modal button attemp 1 -->
+  <button class="modal-button">open modal</button>
+
+  <!-- question modal -->
+  <div class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <!-- TODO: fix close location and functionality -->
+        <span class="close">&times;</span>
+        <h2>insert topic and value</h2>
+      </div>
+      <div class="modal-body">
+        <p>insert question text here</p>
+      </div>
+      <form class="modal-footer">
+        <input class="answer" type="text" placeholder="">
+        <input type="submit" value="submit">
+      </form>
+    </div>
+  </div>
   
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 <script src="script.js"></script>
