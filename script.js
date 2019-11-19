@@ -6,6 +6,7 @@ $(function() {
   let player1 = $(".player1");
   let player2 = $(".player2");
   let player3 = $(".player3");
+
   // get the score from the initial DOM state
   let p1Score = parseInt(
     $(".player1-score")
@@ -27,14 +28,6 @@ $(function() {
   let turn = 0;
   let answeredQuestions = 0;
 
-  // get user input for contestant names and populate those in the DOM
-  // player1 = prompt("What's player 1's name?");
-  // $(".player1").text(player1);
-  // player2 = prompt("What's player 2's name?");
-  // $(".player2").text(player2);
-  // player3 = prompt("What's player 3's name?");
-  // $(".player3").text(player3);
-
   // helper function to decide if an answer is correct
   const isCorrectAnswer = () => {
     const answer = prompt("Some question");
@@ -44,6 +37,15 @@ $(function() {
     }
 
     return false;
+  };
+
+  const setScore = function(score, player) {
+    if (score >= 0) {
+      $(player).text(`$${score}`);
+    } else {
+      score = Math.abs(score);
+      $(player).text(`-$${score}`);
+    }
   };
 
   // the handler for the question listener
@@ -64,19 +66,14 @@ $(function() {
             .text()
             .slice(1, $(thisObject).text().length)
         );
-
-        // TODO: fix negative score
-        $(`.${player}-score`).text(`$${playerScore}`);
       } else {
         playerScore -= parseInt(
           $(thisObject)
             .text()
             .slice(1, $(thisObject).text().length)
         );
-
-        // TODO: fix negative score
-        $(`.${player}-score`).text(`$${playerScore}`);
       }
+      setScore(playerScore, `.${player}-score`);
 
       return playerScore;
     };
@@ -106,88 +103,140 @@ $(function() {
     answeredQuestions++;
   };
 
+  const gameWinnerMessage = function(player, score) {
+    $(".modal").attr("style", "display: block");
+    // hide all unnecessary parts of the modal
+    $(".modal").find("input").hide();
+
+    // create winner message
+    $(".modal")
+      .find("h2")
+      .text("Game Over!");
+    $(".modal")
+      .find("p")
+      .text(`${player.text()} is the winner with $${score}!`);
+  }
+
+  const multiWinnerMessage = function(score) {
+    $(".modal").attr("style", "display: block");
+    // hide all unnecessary parts of the modal
+    $(".modal").find("input").hide();
+
+    // create winner message
+    $(".modal")
+      .find("h2")
+      .text("Game Over!");
+    $(".modal")
+      .find("p")
+      .text(`Multiple winners today! Multiple contestants got $${score}!`);
+  }
+
+  const noWinnerMessage = function() {
+    $(".modal").attr("style", "display: block");
+    // hide all unnecessary parts of the modal
+    $(".modal").find("input").hide();
+
+    // create winner message
+    $(".modal")
+      .find("h2")
+      .text("Game Over!");
+    $(".modal")
+      .find("p")
+      .text(`No winners today. Unfortunately, no one won any money.`);
+  }
+
   // logic for game ending
   const isGameOver = function() {
     // check if the maximum number of questions have been answered
     if (answeredQuestions === $(".question").length) {
-      alert(`Game Over!`);
+
       // announce winner (if any)
-      if (p1Score > p2Score && p1Score > p3Score) {
-        alert(`${player1} is the winner with $${p1Score}!`);
+      if (Math.max(p1Score, p2Score, p3Score) < 0) {
+        noWinnerMessage();
+      } else if (p1Score > p2Score && p1Score > p3Score) {
+        gameWinnerMessage(player1, p1Score);
       } else if (p2Score > p1Score && p2Score > p3Score) {
-        alert(`${player2} is the winner with $${p2Score}!`);
+        gameWinnerMessage(player2, p2Score);
       } else if (p3Score > p1Score && p3Score > p2Score) {
-        alert(`${player3} is the winner with $${p3Score}!`);
+        gameWinnerMessage(player3, p3Score);
       } else {
-        alert(
-          `No winners today. Multiple contestants got $${Math.max(
-            p1Score,
-            p2Score,
-            p3Score
-          )}.`
-        );
+        multiWinnerMessage(Math.max(
+          p1Score,
+          p2Score,
+          p3Score
+        ));
       }
     }
   };
 
-  const resetForm = function() {    
+  const resetForm = function() {
     $(".modal").attr("style", "display: none");
     $(".answer").val("");
-  }
+  };
 
-  const setNames = function(playerNumber) {   
-    console.log('setNames');
+  const setNames = function(playerNumber) {
+    console.log("setNames");
     console.log(playerNumber);
 
-     
     $(".modal").attr("style", "display: block");
-    $(".modal").find("p").text("What's your name?");
+    $(".modal")
+      .find("p")
+      .text("What's your name?");
     $(".answer").focus();
 
-    $(".modal").find("h2").text(`Player ${playerNumber}`);
-    $(".modal").find(".answer").attr("placeholder", `Player ${playerNumber}`);
-    
-    $(".modal").find("form").on("submit", function(e) {
-      e.preventDefault();
-      if ($("input").val() !== "") {
-        if (playerNumber === 1) {
-          $('.player1').text($("input").val());
-        } else if (playerNumber === 2) {
-          console.log('2 is running');
-          
-          $('.player2').text($("input").val());
-        } else if (playerNumber === 3) {
-          $('.player3').text($("input").val());
-        }
-      }
+    $(".modal")
+      .find("h2")
+      .text(`Player ${playerNumber}`);
+    $(".modal")
+      .find(".answer")
+      .attr("placeholder", `Player ${playerNumber}`);
 
-      resetForm();
-    });
-  }
+    $(".modal")
+      .find("form")
+      .on("submit", function(e) {
+        e.preventDefault();
+        if ($("input").val() !== "") {
+          if (playerNumber === 1) {
+            $(".player1").text($("input").val());
+          } else if (playerNumber === 2) {
+            console.log("2 is running");
+
+            $(".player2").text($("input").val());
+          } else if (playerNumber === 3) {
+            $(".player3").text($("input").val());
+          }
+        }
+
+        resetForm();
+      });
+  };
 
   // event listeners
-  // window.addEventListener("load", function(event) {
-  //   setNames();
-  // });
+  // close modal listeners
+  // close with the 'x' button
+  $(".close").on("click", function() {
+    $(".modal").attr("style", "display: none");
+  });
 
-  // $("form").on("submit", function(event) {
-  //   event.preventDefault();
-  // })
+  // close with the 'escape' button
+  document.addEventListener("keydown", function(e) {
+    if (e.keyCode == 27) {
+      $(".modal").attr("style", "display: none");
+    }
+  });
 
-  $(".players").on("click", ".player", function() {    
+  // click the player button to reset player name listener
+  $(".players").on("click", ".player", function() {
     if ($(this).children(".player1").length) {
       setNames(1);
-    } else if ($(this).children(".player2").length) {   
+    } else if ($(this).children(".player2").length) {
       setNames(2);
     } else if ($(this).children(".player3").length) {
       setNames(3);
     }
   });
 
+  // question button listener
   $(".question").on("click", question);
   $(".question").on("click", isGameOver);
-
-  $(".modal-button").on("click", function() {
-    $(".modal").toggle();
-  })
 });

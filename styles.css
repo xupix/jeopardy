@@ -46,6 +46,21 @@ h1, h2, .players {
   transform: translate(-50%, -50%);
 }
 
+.modal-header .close {
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  width: 2rem;
+  height: 22rem;
+  font-size: 2.2rem;
+  opacity: 1;
+  z-index: 10;
+}
+
+.close:hover {
+  cursor: pointer;
+}
+
 .answer {
   margin-top: 8%;
 }
