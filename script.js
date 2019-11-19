@@ -81,7 +81,7 @@ $(function() {
       return playerScore;
     };
 
-    // updaet the score iff the player got the answer right
+    // update the score iff the player got the answer right
     if (answer) {
       if (turn % 3 === 0) {
         p1Score = turnHelper("player1", p1Score, true, this);
@@ -130,23 +130,38 @@ $(function() {
     }
   };
 
-  const setNames = function(playerNumber) {
+  const resetForm = function() {    
+    $(".modal").attr("style", "display: none");
+    $(".answer").val("");
+  }
+
+  const setNames = function(playerNumber) {   
+    console.log('setNames');
     console.log(playerNumber);
-    
-    $(".modal").toggle();
+
+     
+    $(".modal").attr("style", "display: block");
     $(".modal").find("p").text("What's your name?");
     $(".answer").focus();
 
     $(".modal").find("h2").text(`Player ${playerNumber}`);
     $(".modal").find(".answer").attr("placeholder", `Player ${playerNumber}`);
     
-    const playerClass = `.player${playerNumber}`;
-    $(".modal").find("form").on("submit", function() {
-      if (!$("input").val() === "") {
-        $(playerClass).text($("input").val());
+    $(".modal").find("form").on("submit", function(e) {
+      e.preventDefault();
+      if ($("input").val() !== "") {
+        if (playerNumber === 1) {
+          $('.player1').text($("input").val());
+        } else if (playerNumber === 2) {
+          console.log('2 is running');
+          
+          $('.player2').text($("input").val());
+        } else if (playerNumber === 3) {
+          $('.player3').text($("input").val());
+        }
       }
-      $(".answer").val("");
-      $(".modal").toggle();
+
+      resetForm();
     });
   }
 
@@ -155,25 +170,23 @@ $(function() {
   //   setNames();
   // });
 
-  $("form").on("submit", function(event) {
-    event.preventDefault();
-    // console.log($("input").val());
-    
-    // $(".player1").text($("input").val());
-    // $("input").val("");
-  })
+  // $("form").on("submit", function(event) {
+  //   event.preventDefault();
+  // })
 
-  $(".players").on("click", ".player", function() {
-    if ($(this).children("div.player1")) {
+  $(".players").on("click", ".player", function() {    
+    if ($(this).children(".player1").length) {
       setNames(1);
-    } else if ($(this).children("div.player2")) {      
+    } else if ($(this).children(".player2").length) {   
       setNames(2);
-    } else if ($(this).children("div.player3")) {
+    } else if ($(this).children(".player3").length) {
       setNames(3);
     }
   });
+
   $(".question").on("click", question);
   $(".question").on("click", isGameOver);
+
   $(".modal-button").on("click", function() {
     $(".modal").toggle();
   })
