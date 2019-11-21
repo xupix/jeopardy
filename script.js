@@ -174,43 +174,6 @@ $(function() {
     $(".answer").val("");
   };
 
-  const setNames = function(playerNumber) {
-    console.log("setNames");
-    console.log(playerNumber);
-
-    $(".modal").attr("style", "display: block");
-    $(".modal")
-      .find("p")
-      .text("What's your name?");
-    $(".answer").focus();
-
-    $(".modal")
-      .find("h2")
-      .text(`Player ${playerNumber}`);
-    $(".modal")
-      .find(".answer")
-      .attr("placeholder", `Player ${playerNumber}`);
-
-    $(".modal")
-      .find("form")
-      .on("submit", function(e) {
-        e.preventDefault();
-        if ($("input").val() !== "") {
-          if (playerNumber === 1) {
-            $(".player1").text($("input").val());
-          } else if (playerNumber === 2) {
-            console.log("2 is running");
-
-            $(".player2").text($("input").val());
-          } else if (playerNumber === 3) {
-            $(".player3").text($("input").val());
-          }
-        }
-
-        resetForm();
-      });
-  };
-
   // event listeners
   // close modal listeners
   // close with the 'x' button
@@ -222,17 +185,6 @@ $(function() {
   document.addEventListener("keydown", function(e) {
     if (e.keyCode == 27) {
       $(".modal").attr("style", "display: none");
-    }
-  });
-
-  // click the player button to reset player name listener
-  $(".players").on("click", ".player", function() {
-    if ($(this).children(".player1").length) {
-      setNames(1);
-    } else if ($(this).children(".player2").length) {
-      setNames(2);
-    } else if ($(this).children(".player3").length) {
-      setNames(3);
     }
   });
 
