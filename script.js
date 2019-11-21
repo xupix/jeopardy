@@ -29,10 +29,19 @@ $(function() {
   let answeredQuestions = 0;
 
   // helper function to decide if an answer is correct
-  const isCorrectAnswer = () => {
-    const answer = prompt("Some question");
+  const isCorrectAnswer = thisObject => {
+    let playerAnswer = prompt(
+      $(thisObject)
+        .siblings(".question-text")
+        .text()
+    );
+    playerAnswer = playerAnswer.toLowerCase();
+    let realAnswer = $(thisObject)
+      .siblings(".answer")
+      .text();
+    realAnswer = realAnswer.trim().toLowerCase();
 
-    if (answer !== null) {
+    if (playerAnswer === realAnswer) {
       return true;
     }
 
@@ -56,7 +65,7 @@ $(function() {
       .addClass("answered");
 
     // check if the answer is correct
-    const answer = isCorrectAnswer();
+    const answer = isCorrectAnswer(this);
 
     // turn helper
     const turnHelper = function(player, playerScore, isCorrect, thisObject) {
@@ -106,7 +115,9 @@ $(function() {
   const gameWinnerMessage = function(player, score) {
     $(".modal").attr("style", "display: block");
     // hide all unnecessary parts of the modal
-    $(".modal").find("input").hide();
+    $(".modal")
+      .find("input")
+      .hide();
 
     // create winner message
     $(".modal")
@@ -115,12 +126,14 @@ $(function() {
     $(".modal")
       .find("p")
       .text(`${player.text()} is the winner with $${score}!`);
-  }
+  };
 
   const multiWinnerMessage = function(score) {
     $(".modal").attr("style", "display: block");
     // hide all unnecessary parts of the modal
-    $(".modal").find("input").hide();
+    $(".modal")
+      .find("input")
+      .hide();
 
     // create winner message
     $(".modal")
@@ -129,12 +142,14 @@ $(function() {
     $(".modal")
       .find("p")
       .text(`Multiple winners today! Multiple contestants got $${score}!`);
-  }
+  };
 
   const noWinnerMessage = function() {
     $(".modal").attr("style", "display: block");
     // hide all unnecessary parts of the modal
-    $(".modal").find("input").hide();
+    $(".modal")
+      .find("input")
+      .hide();
 
     // create winner message
     $(".modal")
@@ -143,13 +158,12 @@ $(function() {
     $(".modal")
       .find("p")
       .text(`No winners today. Unfortunately, no one won any money.`);
-  }
+  };
 
   // logic for game ending
   const isGameOver = function() {
     // check if the maximum number of questions have been answered
     if (answeredQuestions === $(".question").length) {
-
       // announce winner (if any)
       if (Math.max(p1Score, p2Score, p3Score) < 0) {
         noWinnerMessage();
@@ -160,11 +174,7 @@ $(function() {
       } else if (p3Score > p1Score && p3Score > p2Score) {
         gameWinnerMessage(player3, p3Score);
       } else {
-        multiWinnerMessage(Math.max(
-          p1Score,
-          p2Score,
-          p3Score
-        ));
+        multiWinnerMessage(Math.max(p1Score, p2Score, p3Score));
       }
     }
   };
