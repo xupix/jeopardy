@@ -110,7 +110,7 @@ button {
   border-color: black;
 }
 
-button:hover, .player:hover {
+button:hover {
   cursor: pointer;
   border: solid;
   border-color: #F3C07A;
@@ -125,4 +125,8 @@ button:disabled:hover {
   cursor: default;
   border: solid;
   border-color: black;
+}
+
+.player:hover {
+  cursor: default;
 }
